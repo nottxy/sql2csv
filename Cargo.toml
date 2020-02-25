@@ -9,6 +9,10 @@ documentation = "https://docs.rs/sql2csv"
 repository = "https://github.com/nottxy/sql2csv"
 keywords = ["sql", 'csv']
 
+[[bin]]
+path = "src/main.rs"
+name = "sql2csv"
+
 [dependencies]
 structopt = "0.3"
 postgres = "0.17"
