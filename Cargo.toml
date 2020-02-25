@@ -1,0 +1,15 @@
+[package]
+name = "sql2csv"
+version = "0.1.0"
+authors = ["Bob <nottxy@gmail.com>"]
+edition = "2018"
+license = "MIT"
+description = "Export SQL query to csv file"
+documentation = "https://docs.rs/sql2csv"
+repository = "https://github.com/nottxy/sql2csv"
+keywords = ["sql", 'csv']
+
+[dependencies]
+structopt = "0.3"
+postgres = "0.17"
+csv = "1.1"
