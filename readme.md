@@ -5,5 +5,5 @@ cargo install sql2csv
 
 # Usage
 ```
-cargo run -- "select * from users" --db "postgres://postgres@localhost/test" --out "export.csv"
+sql2csv --sql "select id,name from users" -- header "id,name" --db "postgres://postgres@localhost/test" --out "export.csv"
 ```

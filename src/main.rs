@@ -4,9 +4,7 @@ use structopt::StructOpt;
 fn main() {
     let opt = Opt::from_args();
 
-    println!("{:#?}", &opt);
-
-    if let Err(err) = sql2csv::export(&opt.db, opt.out, &opt.sql) {
+    if let Err(err) = sql2csv::export(&opt.db, opt.out, &opt.sql, &opt.header) {
         eprintln!("Export Error: {}", err);
     }
 }
@@ -14,12 +12,15 @@ fn main() {
 #[derive(StructOpt, Debug)]
 #[structopt(name = "sql2csv")]
 struct Opt {
-    #[structopt(short, long)]
+    #[structopt(long)]
     db: String,
 
-    #[structopt(short, long, parse(from_os_str))]
+    #[structopt(long, parse(from_os_str))]
     out: PathBuf,
 
-    #[structopt()]
+    #[structopt(long)]
+    header: String,
+
+    #[structopt(long)]
     sql: String,
 }
