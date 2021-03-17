@@ -1,6 +1,6 @@
 [package]
 name = "sql2csv"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Bob <nottxy@gmail.com>"]
 edition = "2018"
 license = "MIT"
@@ -15,5 +15,7 @@ name = "sql2csv"
 
 [dependencies]
 structopt = "0.3"
-postgres = "0.17"
-csv = "1.1"
+postgres = "0.19"
+csv = "1"
+toml = "0.5"
+serde = { version = "1", features = ['derive'] }
