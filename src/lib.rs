@@ -4,24 +4,42 @@ use std::error::Error;
 use std::fs::File;
 use std::path::PathBuf;
 
-pub fn export(db: &str, file_name: PathBuf, sql: &str, header: &str) -> Result<(), Box<dyn Error>> {
-    let mut client = Client::connect(db, NoTls)?;
+pub struct Query {
+    db: String,
+    sql: String,
+    header: String,
+    file_name: PathBuf,
+}
 
-    let rows = client.simple_query(sql)?;
+impl Query {
+    pub fn new(db: String, sql: String, header: String, file_name: PathBuf) -> Query {
+        Query {
+            db,
+            sql,
+            header,
+            file_name,
+        }
+    }
 
-    let mut writer = csv::WriterBuilder::new()
-        .quote_style(csv::QuoteStyle::NonNumeric)
-        .from_path(&file_name)?;
+    pub fn export(&self) -> Result<(), Box<dyn Error>> {
+        let mut client = Client::connect(&self.db, NoTls)?;
 
-    write_header(&mut writer, header)?;
+        let rows = client.simple_query(&self.sql)?;
 
-    write_body(&mut writer, &rows)?;
+        let mut writer = csv::WriterBuilder::new()
+            .quote_style(csv::QuoteStyle::NonNumeric)
+            .from_path(&self.file_name)?;
 
-    writer.flush()?;
+        write_header(&mut writer, &self.header)?;
 
-    println!("Saved file to: {}", file_name.display());
+        write_body(&mut writer, &rows)?;
 
-    Ok(())
+        writer.flush()?;
+
+        println!("Saved file to: {}", self.file_name.display());
+
+        Ok(())
+    }
 }
 
 fn write_header(writer: &mut Writer<File>, header: &str) -> Result<(), Box<dyn Error>> {

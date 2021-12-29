@@ -13,3 +13,5 @@ SELECT
     ,created_at
 FROM users
 """
+
+out = "test.xlsx"
